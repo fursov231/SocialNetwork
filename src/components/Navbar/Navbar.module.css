@@ -1,0 +1,15 @@
+.nav {
+    grid-area: n;
+    background-color: bisque;
+
+}
+ul>li {
+    color: beige;
+}
+li>a {
+    color: white;
+    text-decoration: none;
+}
+li>a.active {
+    color: aqua;
+}
