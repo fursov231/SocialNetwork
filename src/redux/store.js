@@ -6,8 +6,8 @@ let store = {
         profilePage: {
             posts: [
                 {id: 1, message: 'Hola', likesCount: 12},
-                {id: 2, message: 'Im fine', likesCount: 15},
-                {id: 3, message: 'Adios', likesCount: 22},
+                {id: 2, message: 'Dr', likesCount: 15},
+                {id: 3, message: 'Ward', likesCount: 22},
             ],
         },
         dialogsPage: {
@@ -18,9 +18,9 @@ let store = {
                 {id: 3, name: 'Anton'},
             ],
             messages: [
-                {id: 1, message: 'Hi'},
-                {id: 2, message: 'How are you?'},
-                {id: 3, message: 'Amigo'},
+                {id: 1, message: 'Good morning'},
+                {id: 2, message: 'One two'},
+                {id: 3, message: 'Three'},
             ],
             newMessageBody: "",
         },

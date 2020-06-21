@@ -1,58 +1,146 @@
-import {authAPI} from "../api/api";
-import {stopSubmit} from "redux-form";
-
-const SET_USER_DATA = 'SET_USER_DATA'
-
-let initialState = {
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var api_1 = require("../api/api");
+var redux_form_1 = require("redux-form");
+var SET_USER_DATA = 'SET_USER_DATA';
+var GET_CAPTCHA_URL_SUCCESS = 'GET_CAPTCHA_URL_SUCCESS';
+var initialState = {
     id: null,
     email: null,
     login: null,
     isAuth: false,
+    captchaUrl: null,
 };
-
-const authReducer = (state = initialState, action) => {
+var authReducer = function (state, action) {
+    if (state === void 0) { state = initialState; }
     switch (action.type) {
         case SET_USER_DATA:
-            return {
-                ...state,
-                ...action.payload,
-            };
+            return __assign(__assign({}, state), action.payload);
+        case GET_CAPTCHA_URL_SUCCESS:
+            return __assign(__assign({}, state), action.payload);
         default:
             return state;
     }
 };
-
-export const setAuthUserData = (id, email, login, isAuth) => ({
+exports.setAuthUserData = function (id, email, login, isAuth) { return ({
     type: SET_USER_DATA,
-    payload: {id, email, login, isAuth}
-});
-export const getAuthUserData = () => async (dispatch) => {
-    let response = await authAPI.me();
-    if (response.data.resultCode === 0) {
-        let {id, email, login} = response.data.data;
-        dispatch(setAuthUserData(id, email, login, true));
-    }
-}
-
-export const login = (email, password, rememberMe) => async (dispatch) => {
-
-    let response = await authAPI.login(email, password, rememberMe);
-            if (response.data.resultCode === 0) {
-                let {id, email, login} = response.data.data;
-                dispatch(getAuthUserData());
-            } else {
-                let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error';
-                dispatch(stopSubmit("login", {_error: message}));
-            }
-}
-
-export const logout = () => async (dispatch) => {
-   let response = await authAPI.logout();
-            if (response.data.resultCode === 0) {
-                let {id, email, login} = response.data.data;
-                dispatch(setAuthUserData(null, null, null, false));
-            }
+    payload: { id: id, email: email, login: login, isAuth: isAuth }
+}); };
+exports.getCaptchaUrlSuccess = function (captchaUrl) { return ({
+    type: GET_CAPTCHA_URL_SUCCESS,
+    payload: { captchaUrl: captchaUrl }
+}); };
+exports.getAuthUserData = function () { return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
+    var meData, _a, id, email, login_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4 /*yield*/, api_1.authAPI.me()];
+            case 1:
+                meData = _b.sent();
+                if (meData.resultCode === api_1.ResultCodeEnum.Success) {
+                    _a = meData.data; id = _a.id; email = _a.email; login_1 = _a.login;
+                    dispatch(exports.setAuthUserData(id, email, login_1, true));
+                }
+                return [2 /*return*/];
         }
-
-
-export default authReducer;
+    });
+}); }; };
+exports.login = function (email, password, rememberMe, captcha) { return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
+    var loginData, message;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, api_1.authAPI.login(email, password, rememberMe, captcha)];
+            case 1:
+                loginData = _a.sent();
+                if (loginData.resultCode === api_1.ResultCodeEnum.Success) {
+                    /*    let {id, email, login} = response.data.data;*/
+                    dispatch(exports.getAuthUserData());
+                }
+                else {
+                    if (loginData.resultCode === api_1.ResultCodeEnumForCaptcha.CaptchaIsRequired) {
+                        dispatch(exports.getCaptcha());
+                    }
+                    debugger;
+                    message = loginData.messages.length > 0 ? loginData.messages[0] : 'Some error';
+                    dispatch(redux_form_1.stopSubmit("login", { _error: message }));
+                }
+                return [2 /*return*/];
+        }
+    });
+}); }; };
+exports.getCaptcha = function () { return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
+    var response, captchaUrl;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, api_1.securityAPI.getCaptchaUrl()];
+            case 1:
+                response = _a.sent();
+                captchaUrl = response.data.url;
+                dispatch(exports.getCaptchaUrlSuccess(captchaUrl));
+                return [2 /*return*/];
+        }
+    });
+}); }; };
+exports.logout = function () { return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
+    var response;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, api_1.authAPI.logout()];
+            case 1:
+                response = _a.sent();
+                if (response.data.resultCode === 0) {
+                    /*let {id, email, login} = response.data.data;*/
+                    dispatch(exports.setAuthUserData(null, null, null, false));
+                }
+                return [2 /*return*/];
+        }
+    });
+}); }; };
+exports.default = authReducer;

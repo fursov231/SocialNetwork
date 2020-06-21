@@ -1,32 +1,24 @@
-import {createSelector} from "reselect";
-
-const getUsersSelector = (state) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var reselect_1 = require("reselect");
+var getUsersSelector = function (state) {
     return state.usersPage.users;
 };
-
-export const getUsers = createSelector (getUsersSelector, (users) => {
-    return users.filter (u => true)
-})
-export const getPageSize = (state) => {
-        return state.usersPage.pageSize;
+exports.getUsers = reselect_1.createSelector(getUsersSelector, function (users) {
+    return users.filter(function (u) { return true; });
+});
+exports.getPageSize = function (state) {
+    return state.usersPage.pageSize;
 };
-
-export const getTotalUsersCount = (state) => {
+exports.getTotalUsersCount = function (state) {
     return state.usersPage.totalUsersCount;
 };
-
-export const getCurrentPage = (state) => {
+exports.getCurrentPage = function (state) {
     return state.usersPage.currentPage;
 };
-
-export const getIsFetching = (state) => {
+exports.getIsFetching = function (state) {
     return state.usersPage.isFetching;
 };
-
-export const getFollowingInProgress = (state) => {
+exports.getFollowingInProgress = function (state) {
     return state.usersPage.followingInProgress;
 };
-
-
-
-
